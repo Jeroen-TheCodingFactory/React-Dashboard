@@ -1,0 +1,46 @@
+.popup{
+    width: 50rem;
+    height: 35rem;
+    background: #191A19;
+    border-radius: 1rem;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    padding:4rem;
+    gap: 8rem;
+}
+
+.popup__label{
+    font-size: 120%;
+}
+.popup__wrapper{
+    display:flex;
+    flex-direction: column;
+    gap:0.5rem;
+}
+
+.popup__input{
+    background:none;
+    border:none;
+    color: #eee;
+    font-size: 200%;
+    border-bottom: 0.2rem solid #eee;
+    outline:none;
+}
+
+.popup__button{
+    width: 15rem;
+    height:5rem;
+    font-size: 90%;
+    font-family: sans-serif;
+    border:none;
+    color: #eee;
+    border-radius:5rem;
+    background: linear-gradient(to bottom right, #4E9F3D,95%,#1E5128);
+    transition: 0.8s all;
+}
+
+.popup__button:hover{
+    cursor:pointer;
+    filter:hue-rotate(40deg)
+}
