@@ -41,13 +41,17 @@ class Dashboard extends React.Component {
             open: !this.state.open,
         })
     }
+
+    onCardClicked = () =>{
+        this.setState({open: !this.state.open});
+    }
    
     render(){
         if(this.state.open === true){
             return (
                 <article className="dashboard">
                     <LeftPane navigationListItems={navigationItemsObject.navigationItems} buttonText="Go Premium"></LeftPane>
-                    <RightPane onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe"></RightPane>
+                    <RightPane onCardClicked={this.onCardClicked} onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe"></RightPane>
                 </article>
             );
         }

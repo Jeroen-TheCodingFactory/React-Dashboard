@@ -29,9 +29,15 @@
     flex-direction: column;
     gap:2rem;
     position:relative;
+    transition: 0.8s all;
 }
 
-.productsLits__img{
+.productsList__item--gray:hover{
+    cursor:pointer;
+    filter: grayscale(1);
+}
+
+.productsList__img{
     height:100%;
     width:100%;
     object-fit: cover;
