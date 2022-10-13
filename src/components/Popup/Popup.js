@@ -6,25 +6,38 @@ class Popup extends React.Component {
         this.state = {input: ""}
     }
 
+    componentDidMount(){
+        console.log("mount?")
+        this.setState({ input: this.props.cardClicked.name })
+    }
+
     input = (event) =>{
         this.setState({input: event.target.value});
     }
 
-    updateProducts = () =>{
+    addProduct = () =>{
         if(this.state.input !== ""){
             this.props.addButtonClicked(this.state.input);
         }
     }
+
+    editProduct = () => {
+        this.props.editButtonClicked(this.state.input);
+    }
     
     render(){
+        let button = <button onClick={this.addProduct} className="popup__button">Voeg toe</button>;
+        if(this.props.editMode === true){
+            button = <button onClick={this.editProduct} className="popup__button">Pas aan</button>;
+        }
 
         return (
             <article className="popup">
-                <div class="popup__wrapper">
+                <div className="popup__wrapper">
                     <label htmlFor="name" className="popup__label">Naam</label>
                     <input onChange={this.input} value={this.state.input} type="text" className="popup__input" id="name" />
                 </div>
-                <button onClick={this.updateProducts} className="popup__button">Voeg toe</button>
+                {button}
             </article>
         );
     }

@@ -1,62 +1,42 @@
 import React from "react";
+/* Own Components */
 import LeftPane from "../LeftPane/LeftPane";
 import RightPane from "../RightPane/RightPane";
 import Popup from "../Popup/Popup";
-import flowerImage from "../../img/pexels-irina-iriser-673857.jpg";
-import pineappleImage from "../../img/pexels-karolina-grabowska-4195527.jpg";
-import colaImage from "../../img/pexels-olena-bohovyk-3819969.jpg";
-import skyImage from "../../img/pexels-soubhagya-maharana-5245865.jpg";
+/* helpers */
+import chooseImage from "../../helpers/chooseImage";
+/* import data from data source */
+import productsObject from "../../data/products";
+import navigationItemsObject from "../../data/navigationItems";
+/* Styling / CSS */
 import "./Dashboard.css";
 class Dashboard extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state = {productCards: [], open: true};
+        this.state = {
+            productCards: [],
+            open: true,
+            cardClicked: {},
+            editMode: false,
+        };
     }
 
- 
-    componentDidMount(){
-        let productCards = [
-            {
-                name: "Placeholder"
-            },
-            {
-                name:"Bloemen",
-                img: flowerImage
-            }, 
-            {
-                name: "Annanas",
-                img: pineappleImage
-            }
-        ];
-        this.setState({productCards: productCards})
-
+    componentDidMount() {
+        this.setState({ productCards: productsObject.products });
     }
 
     onButtonClicked = () => {
-        this.setState({open: !this.state.open})
+        this.setState({ open: !this.state.open })
     }
 
     addButtonClicked = (inputFromPopup) => {
-        let toBeAddedImage;
-        switch(inputFromPopup){
-            case("Annanas"):
-                toBeAddedImage = pineappleImage;
-                break;
-            case("Bloemen"):
-                toBeAddedImage = flowerImage;
-                break;
-            case("Cola"):
-                toBeAddedImage = colaImage;
-                break;
-            default:
-                toBeAddedImage = skyImage;
-                break;
-        }
+        let imageFromHelper = chooseImage(inputFromPopup);
         let toBeAdded = [
             {
+                id: this.state.productCards.length + 1,
                 name: inputFromPopup,
-                img: toBeAddedImage
+                img: imageFromHelper
             }
         ]
 
@@ -66,44 +46,51 @@ class Dashboard extends React.Component {
             open: !this.state.open,
         })
     }
-   
-    render(){
-        let navigationListItems = 
-        [
-            {
-                name: "Home",
-                message: 0,
-            },
-            {
-                name: "Facturen",
-                message: 3,
-            },
-            {
-                name: "Bestellingen",
-                message: 0,
-            },
-            {
-                name: "Retour",
-                message: 1,
-            },
-            {
-                name: "Contact",
-                message: 2,
-            },
-            
-        ];
-        if(this.state.open === true){
+
+    editButtonClicked = (inputFromPopup) => {
+        let productCards = this.state.productCards;
+        let newState = productCards.map(product => {
+            if(this.state.cardClicked.id === product.id){
+                product.name = inputFromPopup;
+                return product;
+            }
+            else{
+                return product;
+            }
+        });
+        this.setState({ productCards: newState, open: true});
+    }
+
+    onCardClicked = (idFromCard) => {
+        console.log(idFromCard);
+        if (this.state.productCards[idFromCard - 1].name === "Placeholder") {
+            this.setState({
+                editMode: false,
+                open: !this.state.open,
+                cardClicked: this.state.productCards[idFromCard - 1],
+            });
+            return;
+        }
+        this.setState({
+            editMode: true,
+            open: !this.state.open,
+            cardClicked: this.state.productCards[idFromCard - 1],
+        });
+    }
+
+    render() {
+        console.table(this.state.cardClicked);
+        if (this.state.open === true) {
             return (
                 <article className="dashboard">
-                    <LeftPane navigationListItems={navigationListItems} buttonText="Go Premium"></LeftPane>
-                    <RightPane onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe"></RightPane>
+                    <LeftPane navigationListItems={navigationItemsObject.navigationItems} buttonText="Go Premium"></LeftPane>
+                    <RightPane onProductCardClicked={this.onCardClicked} onButtonClicked={this.onButtonClicked} productCards={this.state.productCards} headerText="Mijn Producten" buttonSymbol="+" buttonText="Voeg een product toe"></RightPane>
                 </article>
             );
         }
-        return(
-            <Popup addButtonClicked={this.addButtonClicked} />
+        return (
+            <Popup editButtonClicked={this.editButtonClicked} editMode={this.state.editMode} cardClicked={this.state.cardClicked} addButtonClicked={this.addButtonClicked} />
         )
-       
     }
 }
 
