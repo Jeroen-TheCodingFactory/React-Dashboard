@@ -10,21 +10,16 @@ const products =  [
     },
     {
         id: 2,
-        name:"Bloemen",
-        img: flowerImage
-    }, 
-    {
-        id: 3,
         name: "Annanas",
         img: pineappleImage
     },
     {
-        id: 4,
+        id: 3,
         name:"Bloemen",
         img: flowerImage
     },
     {
-        id: 5,
+        id: 4,
         name: "Cola",
         img: colaImage,
     }

@@ -9,7 +9,7 @@ const RightPane = ({headerText, buttonSymbol, buttonText, productCards, onButton
     
     let productCardsToBeRendered = productCards.map(product => {
         if(product.name === "Placeholder"){
-           return <Placeholder id={product.id} onCardClicked={onCardClicked} buttonSymbol="+" buttonText="Voeg product toe" />
+           return <Placeholder id={product.id} key={product.id} onCardClicked={onCardClicked} buttonSymbol="+" buttonText="Voeg product toe" />
         }
         return <ProductCard onCardClicked={onCardClicked} key={product.id} id={product.id} name={product.name} productImg={product.img} />
       

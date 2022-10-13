@@ -7,9 +7,9 @@ class Popup extends React.Component {
     }
 
     componentDidMount(){
+        console.log("mount?")
         this.setState({ input: this.props.cardClicked.name })
     }
-
 
     input = (event) =>{
         this.setState({input: event.target.value});
@@ -22,7 +22,7 @@ class Popup extends React.Component {
     }
 
     editProduct = () => {
-        console.log("edit");
+        this.props.editButtonClicked(this.state.input);
     }
     
     render(){
